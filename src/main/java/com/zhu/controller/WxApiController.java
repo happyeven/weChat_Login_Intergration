@@ -2,6 +2,7 @@ package com.zhu.controller;
 
 import com.google.gson.Gson;
 import com.zhu.util.ConstantWxUtils;
+import javax.servlet.http.Cookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +66,7 @@ public class WxApiController {
     }
 
     @GetMapping("/callback")
-    public String callback(@RequestParam("code") String code, @RequestParam("state") String state)
+    public void callback(@RequestParam("code") String code, @RequestParam("state") String state,HttpServletResponse response)
             throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         try {
@@ -107,7 +108,9 @@ public class WxApiController {
                     restTemplate.postForEntity(createButtonUrl, buttonJson, String.class);
             System.out.println(createButtonInfo.getHeaders() + "\n" + createButtonInfo.getBody());
             /** 方法回调结束后的跳转地址 */
-            return "redirect:http://www.baidu.com";
+            response.addCookie(new Cookie("user" , "aaa"));
+            response.sendRedirect("http://www.epa.com:3000/");
+           // return "redirect:http://www.epa.com:3000/";
         } catch (Exception e) {
             throw new Exception("方法回调出现错误");
         }
