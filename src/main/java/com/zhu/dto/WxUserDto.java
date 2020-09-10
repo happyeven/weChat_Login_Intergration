@@ -53,4 +53,14 @@ public class WxUserDto {
     this.sex = sex;
     this.headimgurl = headimgurl;
   }
+
+  @Override
+  public String toString() {
+    return "{" +
+        "openid=" + openid +
+        ",nickname=" + nickname +
+        ",sex=" + sex +
+        ",headimgurl=" + headimgurl +
+        '}';
+  }
 }
